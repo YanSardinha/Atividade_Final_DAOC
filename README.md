@@ -1,6 +1,6 @@
-### TRABALHO FINAL DAOC
+# TRABALHO FINAL DAOC
 
-# Passos a serem reproduzidos
+### Passos a serem reproduzidos
   - Instalar a biblioteca virtualenv
     - pip install virtualenv
   - Criar/entrar na virtualenv
