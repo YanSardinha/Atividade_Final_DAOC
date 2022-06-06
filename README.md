@@ -8,3 +8,7 @@
     - venv\Scripts\activate
   - Assim que entrar na virtualenv, instalar o Django
     - pip install django
+  - Após instalar o django, atualizar as migrações
+    - py manage.py migrate
+    - py manage.py migrate --run-syncdb
+    - py manage.py makemigrations
