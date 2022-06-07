@@ -1,6 +1,6 @@
-### TRABALHO FINAL DAOC
+# TRABALHO FINAL DAOC
 
-# Passos a serem reproduzidos
+### Passos a serem reproduzidos
   - Instalar a biblioteca virtualenv
     - pip install virtualenv
   - Criar/entrar na virtualenv
@@ -8,3 +8,9 @@
     - venv\Scripts\activate
   - Assim que entrar na virtualenv, instalar o Django
     - pip install django
+  - Após instalar o django, atualizar as migrações
+    - py manage.py migrate
+    - py manage.py migrate --run-syncdb
+    - py manage.py makemigrations
+
+#### Desenvolvido por: *Jodson Alves, Marianne Dutra e Yan Sardinha*
