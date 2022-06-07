@@ -12,3 +12,5 @@
     - py manage.py migrate
     - py manage.py migrate --run-syncdb
     - py manage.py makemigrations
+
+#### Desenvolvido por: *Jodson Alves, Marianne Dutra e Yan Sardinha*
