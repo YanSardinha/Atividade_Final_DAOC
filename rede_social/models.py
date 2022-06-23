@@ -23,18 +23,6 @@ class Pessoa(models.Model):
         "Retorna quantidade de pessoas que são seguidores"
         return Pessoa.objects.filter(amigos=self).count()
 
-    """
-    @property
-    def qt_seguindo(self):
-        "Retorna quantidade de pessoas que a pessoa está seguindo"
-        return Pessoa.objects.filter(amigos=self).count()
-    """
-    '''
-    Opções para conferir quantas pessoas o usuário está seguindo.
-    1 - Filtrar para pegar o count de quantas vezes o usuário aparece como seguidor para outra pessoa (Pesado em larga escala).
-    2 - Criar variável que captura quem você está seguindo, e fazer um count.
-    '''
-
 class Postagem(models.Model):
     pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE, verbose_name="Pessoa" )
     conteudo = models.CharField('Conteudo', max_length=200)
