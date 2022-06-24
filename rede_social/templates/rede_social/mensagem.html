@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <title>Publicação</title>
+        <style type="text/css">
+            .errorlist{
+                color: red;
+            }
+        </style>
+    </head>
+
+    <body>
+            <p class="logged-in-p">
+                Olá {{user.username}} seja bem vindo, o que deseja fazer hoje?
+                <span class="sair">
+                <a href="{% url 'logout' %}">Sair</a>
+                </span>
+            </p>  
+        <h1>Publicação de {{user.username}}</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button type="submit">Enviar Publicação</button>
+        </form>
+    </body>
+</html>

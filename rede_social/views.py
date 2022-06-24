@@ -2,13 +2,15 @@ from django.http import HttpResponse
 from django.http import Http404
 from django.shortcuts import render
 from django.db.models import Prefetch
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views.generic import FormView, TemplateView
-from rede_social.forms import ContatoForm
+from rede_social.forms import ContatoForm, MensagemForm
 from .models import MensagemDeContato, Pessoa, Postagem
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 
 def index(request):
-    return HttpResponse('Página Inicial')
+    return render(request, 'rede_social/index.html')
 
 def perfil_template(request,slug):
     try:
@@ -36,3 +38,17 @@ class ContatoView(FormView):
 
 class ContatoSucessoView(TemplateView):
     template_name = 'rede_social/contato_sucesso.html'
+
+class MensagemView(LoginRequiredMixin,FormView):
+    login_url = reverse_lazy('login')
+    template_name = 'rede_social/mensagem.html'
+    form_class = MensagemForm
+
+    def form_valid(self, form):
+        dados = form.clean()
+        conteudo = Postagem(pessoa = self.request.user.pessoa, conteudo = dados['publicacao'])
+        conteudo.save()
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('index')
