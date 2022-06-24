@@ -1,12 +1,44 @@
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+
+<!------ Include the above in your HEAD tag ---------->
 <!DOCTYPE html>
-<html>
-    <head>
-    </head>
-    <body>
-        <form action="." method="POST">
-            {% csrf_token %}
-            {{ form.as_p}}
-            <input value="Entrar" type="submit">
-        </form>
-    </body>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Login</title>
+</head>
+<body>
+	<form action="." method="POST">
+		{% csrf_token %}
+		<!-- Email input -->
+		<div class="form-outline mb-4">
+			{{ form.username|as_crispy_field }}
+		</div>
+		<!-- Password input -->
+		<div class="form-outline mb-4">
+			{{ form.password|as_crispy_field }}
+		</div>
+		<input value="Entrar" type="submit">
+		<!-- 2 column grid layout for inline styling -->
+		<div class="row mb-4">
+		<div class="col d-flex justify-content-center">
+		</div>
+		<div class="col">
+			<!-- Simple link -->
+			<a href="#!">Esqueceu sua senha?</a>
+		</div>
+		</div>
+		<!-- Submit button -->
+		
+		<!-- Register buttons -->
+		<div class="text-center">
+			<p>Ainda não tem uma conta? <a href="#!">Se registre</a></p>
+		</div>
+	</form>
+</body>
 </html>

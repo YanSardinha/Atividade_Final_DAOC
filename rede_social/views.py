@@ -7,21 +7,9 @@ from django.views.generic import FormView, TemplateView
 from rede_social.forms import ContatoForm, MensagemForm
 from .models import MensagemDeContato, Pessoa, Postagem
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
-def index(request):
-    return render(request, 'rede_social/index.html')
-
-def perfil_template(request,slug):
-    try:
-        perfil = Pessoa.objects.prefetch_related(
-        Prefetch('postagem_set', queryset=Postagem.objects.order_by('-data'))
-        ).get(slug=slug)
-
-    except Pessoa.DoesNotExist:
-        raise Http404('Perfil não encontrado')
-        
-    return render(request, 'rede_social/perfil.html', {'perfil': perfil})
+#<!---------------AUTENTICAÇÃO NÃO NECESSÁRIA----------------------!>#
 
 class ContatoView(FormView):
     template_name = 'rede_social/contato.html'
@@ -38,6 +26,24 @@ class ContatoView(FormView):
 
 class ContatoSucessoView(TemplateView):
     template_name = 'rede_social/contato_sucesso.html'
+
+#<!---------------AUTENTICAÇÃO NECESSÁRIA----------------------!>#
+@login_required(login_url='/conta/login')
+def index(request):
+    postagem = Postagem.objects.order_by("-id")
+    return render(request, 'rede_social/index.html',{'postagem': postagem})
+
+@login_required(login_url='/conta/login')
+def perfil_template(request,slug):
+    try:
+        perfil = Pessoa.objects.prefetch_related(
+        Prefetch('postagem_set', queryset=Postagem.objects.order_by('-data'))
+        ).get(slug=slug)
+
+    except Pessoa.DoesNotExist:
+        raise Http404('Perfil não encontrado')
+
+    return render(request, 'rede_social/perfil.html', {'perfil': perfil})
 
 class MensagemView(LoginRequiredMixin,FormView):
     login_url = reverse_lazy('login')
