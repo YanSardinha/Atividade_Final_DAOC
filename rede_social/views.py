@@ -5,7 +5,7 @@ from django.db.models import Prefetch
 from django.urls import reverse, reverse_lazy
 from django.views.generic import FormView, TemplateView
 from rede_social.forms import ContatoForm, MensagemForm
-from .models import MensagemDeContato, Pessoa, Postagem
+from .models import MensagemDeContato, Pessoa, Postagem, Comentario
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 
