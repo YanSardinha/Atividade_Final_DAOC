@@ -1,4 +1,5 @@
 from django import forms
+from .models import Comentario
 
 class ContatoForm(forms.Form):
     nome = forms.CharField(max_length = 128, min_length = 12)
@@ -26,3 +27,8 @@ class MensagemForm(forms.Form):
         dados = super().clean()
         mensagem = dados
         return mensagem
+
+class NovoComentario(forms.ModelForm):
+    class Meta:
+        comentario = Comentario
+        campo = ['conteudo']
