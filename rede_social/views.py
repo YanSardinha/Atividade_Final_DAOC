@@ -3,8 +3,8 @@ from django.http import Http404
 from django.shortcuts import render
 from django.db.models import Prefetch
 from django.urls import reverse, reverse_lazy
-from django.views.generic import FormView, TemplateView, DetailView
-from rede_social.forms import ContatoForm, MensagemForm, NovoComentario
+from django.views.generic import FormView, TemplateView, DetailView, CreateView
+from rede_social.forms import ContatoForm, PostagemForm, NovoComentario
 from .models import MensagemDeContato, Pessoa, Postagem, Comentario
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
@@ -45,15 +45,15 @@ def perfil_template(request,slug):
 
     return render(request, 'rede_social/perfil.html', {'perfil': perfil})
 
-class MensagemView(LoginRequiredMixin,FormView):
-    login_url = reverse_lazy('login')
-    template_name = 'rede_social/mensagem.html'
-    form_class = MensagemForm
+class PostagemView(LoginRequiredMixin, CreateView):
+    template_name = 'rede_social/postagem.html'
+    form_class = PostagemForm
+    model = Postagem
 
     def form_valid(self, form):
-        dados = form.clean()
-        conteudo = Postagem(pessoa = self.request.user.pessoa, conteudo = dados['publicacao'])
-        conteudo.save()
+        postagem = form.save(commit=False)
+        postagem.pessoa =self.request.user.pessoa
+        postagem.save()
         return super().form_valid(form)
 
     def get_success_url(self):

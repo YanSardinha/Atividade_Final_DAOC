@@ -1,5 +1,5 @@
 from django import forms
-from .models import Comentario
+from .models import Comentario, Postagem
 
 class ContatoForm(forms.Form):
     nome = forms.CharField(max_length = 128, min_length = 12)
@@ -20,13 +20,10 @@ class ContatoForm(forms.Form):
                 self.add_error('mensagem', 'Mensagem contém palavra não permitida')
         return dados
 
-class MensagemForm(forms.Form):
-    publicacao = forms.CharField(widget = forms.Textarea)
-    
-    def clean(self):
-        dados = super().clean()
-        mensagem = dados
-        return mensagem
+class PostagemForm(forms.ModelForm):
+    class Meta:
+        model = Postagem
+        fields = ['conteudo']
 
 class NovoComentario(forms.ModelForm):
     class Meta:
