@@ -4,7 +4,7 @@
 <ul class="timeline">
 {% for p in postagem %}
   <li>
-    <a target="_blank" href="https://www.totoprayogo.com/#">@{{ p.pessoa }}</a>
+    <a target="_blank" href="https://www.totoprayogo.com/#">{{ p.pessoa }} - @{{p.pessoa.usuario}}</a>
     <p class="float-right">{{ p.data|date:"d/m/Y" }}</p>
     <p>{{ p.conteudo }}</p>
   </li>

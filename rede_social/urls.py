@@ -6,5 +6,6 @@ urlpatterns = [
     path('contato/', ContatoView.as_view(), name='form_contato'),
     path('contato_sucesso/', ContatoSucessoView.as_view(), name='contato_sucesso'),
     path('postagem/', PostagemView.as_view(), name='postagem'),
-    path('<str:slug>', perfil_template, name='perfil'),
+    #path('postagem/'),
+    path('<str:slug>/', perfil_template, name='perfil'),
 ]
