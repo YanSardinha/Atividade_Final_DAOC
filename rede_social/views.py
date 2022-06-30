@@ -92,7 +92,7 @@ class PostagemView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse('index')
 
-class PostDetalhado(DetailView):
+class PostDetalhado(LoginRequiredMixin,DetailView):
     model = Postagem
     template_name = 'rede_social/post_detalhe.html'
     context_object_name = 'postagem'
