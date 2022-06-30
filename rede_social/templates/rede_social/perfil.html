@@ -1,45 +1,61 @@
-{% extends 'rede_social/base.html' %}
-{% block content %}
-    {% if perfil.postagem_set.all %}
-    {% for postagem in perfil.postagem_set.all %}
-    <div class="my-3 p-3 bg-body rounded shadow-sm">
-        <h6 class="border-bottom pb-4 mb-0">{{ postagem.conteudo }}</h6>
-        <div class="d-flex text-muted pt-3">
-            <p class="pb-3 mb-0 small lh-sm border-bottom">
-                <strong class="d-block text-gray-dark">{{perfil.nome}}</strong>
-                {{postagem.data}}
-            </p>
-        </div>
-        {% for comentario in postagem.comentario_set.all %}
-        <div class="my-3 p-3 bg-body rounded shadow-sm border">
-            <h6 class="border-bottom pb-2 mb-0">{{comentario.conteudo}}</h6>
-        <div class="d-flex text-muted pt-3">
-            <p class="pb-3 mb-0 small lh-sm border-bottom"> {{ comentario.pessoa.nome }}
-            {{comentario.data}}
-            </p>
-        </div>
-    </div>
-        {% endfor %}
-    {% endfor %}
+{% extends 'rede_social/base.html' %} {% block content %}
+<header class="container">
+  <nav class="navbar navbar-expand-lg navbar-light rounded">
+    <a class="navbar-brand" href="#">{{ perfil}}</a>
+    {% if user.is_authenticated %}
+    {% if perfil == user.pessoa %}
+    <a class="navbar-brand" href="{% url 'index' %}">Início</a>
+    {% elif segue %}     
+    <a class="btn btn-primary" href="{% url 'desseguir' perfil.slug %}">Seguindo</a>
     {% else %}
-    <div class="my-3 p-3 bg-body rounded shadow-sm">
-        <h6 class="border-bottom pb-2 mb-0">Postagens</h6>
-        <div class="d-flex text-muted pt-3">
-            <p class="pb-3 mb-0 small lh-sm">
-                Ainda não existem postagens suas
-            </p>
-        </div>
-    </div>
+    <a class="btn btn-primary" href="{% url 'seguir' perfil.slug %}">Seguir</a>
     {% endif %}
-    </main>
-<!--Ainda será criado um template para satisfazer a aba de comentários, dentro da publicação e abaixo do conteúdo da mensagem.-->
-{% if user.is_authenticated %}
-<p class="logged-in-p">
-    Olá {{user.username}} seja bem vindo, o que deseja fazer hoje?
-    <span class="sair">
-    <a href="{% url 'logout' %}">Sair</a>
-    </span>
-</p>  
-{% endif %}
-{% endblock %}
+      {% endif %}
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarsExample09"
+      aria-controls="navbarsExample09"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
+    <div class="collapse navbar-collapse" id="navbarsExample09">
+      <ul class="navbar-nav ml-auto">
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link text-primary" href="{% url 'postagem' %}"
+            >Publicar</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-primary" href="{% url 'logout' %}">Sair</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link text-primary" href="{% url 'login' %}">Login</a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
+</header>
+<main class="container">
+  {% if perfil.postagem_set.all %}
+  <ul class="timeline">
+    {% for p in perfil.postagem_set.all %}
+    <li>
+      <a target="_blank" href="https://www.totoprayogo.com/#"
+        >@{{ p.pessoa }}</a
+      >
+      <p class="float-right">{{ p.data|date:"d/m/Y"}} {{p.data|time:"H:i"}}</p>
+      <p>{{ p.conteudo }}</p>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</main>
+{% endblock %}

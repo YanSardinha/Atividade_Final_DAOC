@@ -8,7 +8,8 @@ class Pessoa(models.Model):
     usuario = models.OneToOneField(
         User, 
         on_delete=models.CASCADE, 
-        verbose_name='Usuário')
+        verbose_name='Usuário',
+        related_name='pessoa')
     amigos = models.ManyToManyField('Pessoa', symmetrical=False, blank= True)
 
     def __str__(self):
@@ -25,7 +26,7 @@ class Pessoa(models.Model):
 
 class Postagem(models.Model):
     pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE, verbose_name="Pessoa" )
-    conteudo = models.CharField('Conteudo', max_length=200)
+    conteudo = models.TextField('Conteudo', max_length=300)
     data = models.DateTimeField("Data de publicação", auto_now_add=True)
 
     def __str__(self):
@@ -39,7 +40,7 @@ class Postagem(models.Model):
 class Comentario(models.Model):
     pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE, verbose_name="Pessoa")
     postagem = models.ForeignKey(Postagem, on_delete=models.CASCADE, verbose_name="Postagem")
-    conteudo = models.CharField('Comentario', max_length=200)
+    conteudo = models.TextField('Comentario', max_length=200)
     data = models.DateTimeField("Data de publicação", auto_now_add=True)
 
     def __str__(self):
