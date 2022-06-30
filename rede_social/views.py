@@ -93,6 +93,7 @@ class PostagemView(LoginRequiredMixin, CreateView):
         return reverse('index')
 
 class PostDetalhado(LoginRequiredMixin,DetailView):
+    login_url = '/conta/login/'
     model = Postagem
     template_name = 'rede_social/post_detalhe.html'
     context_object_name = 'postagem'
