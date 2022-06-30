@@ -36,12 +36,13 @@
 </header>
 <main class="container">
   <ul class="timeline">
+    
     {% for p in postagem %}
     {% for a in user.pessoa.amigos.all %}
     {% if p.pessoa == user.pessoa or p.pessoa == a %}
     <li>
       <a href="{% url 'perfil' p.pessoa.slug %}">@{{ p.pessoa }}</a>
-      <p class="float-right">{{ p.data|date:"d/m/Y" }}</p>
+      <p class="float-right">{{ p.data|date:"d/m/Y"}} {{p.data|time:"H:i"}}</p>
       <a href="{% url 'postagem-detalhe' p.pk %}" class="text-dark">
       <p>{{ p.conteudo }}</p>
       </a>

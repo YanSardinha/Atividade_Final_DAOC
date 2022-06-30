@@ -42,7 +42,7 @@
     <div class="d-flex text-muted pt-3">
         <p class="pb-3 mb-0 small lh-sm border-bottom">
             <strong class="d-block text-gray-dark">{{perfil.nome}}</strong>
-            {{postagem.data}}
+            {{ postagem.data|date:"d/m/Y"}} {{postagem.data|time:"H:i"}}
         </p>
     </div>
 
@@ -53,7 +53,7 @@
         <h6 class="border-bottom pb-2 mb-0">{{comentario.conteudo}}</h6>
     <div class="d-flex text-muted pt-3">
         <p class="pb-3 mb-0 small lh-sm border-bottom"> {{ comentario.pessoa.nome }} ||
-        {{comentario.data}}
+          {{ comentario.data|date:"d/m/Y"}} {{comentario.data|time:"H:i"}}
         </p>
       </div>
     </div>
