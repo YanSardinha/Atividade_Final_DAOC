@@ -10,11 +10,7 @@ class Pessoa(models.Model):
         on_delete=models.CASCADE, 
         verbose_name='Usuário',
         related_name='pessoa')
-<<<<<<< HEAD
-    amigos = models.ManyToManyField('Pessoa', symmetrical=False, blank= True)
-=======
-    #amigos = models.ManyToManyField('Pessoa', symmetrical=False, blank= True)
->>>>>>> 076ec4b251c448a12cd3d9503697beb30cdeff1f
+    amigos = models.ManyToManyField('Pessoa', symmetrical=False, blank= True, null=True)
 
     def __str__(self):
         return self.nome
@@ -25,26 +21,12 @@ class Pessoa(models.Model):
 
     @property
     def qt_seguidores(self):
-        "Retorna quantidade de pessoas que são seguidores."
-        return Seguir.objects.filter(segue_usuario = self.user).count()
-
-    @property
-    def qt_seguindo(self):
-        "Retorna quantidade de pessoas que o usuário segue."
-        return Seguir.objects.filter(usuario = self.usuario).count()
-
-class Seguir(models.Model):
-    usuario = models.ForeignKey(User, related_name='usuario', on_delete=models.CASCADE)
-    segue_usuario = models.ForeignKey(User, related_name='segue_usuario', on_delete=models.CASCADE)
-    data = models.DateTimeField(auto_now_add=True)
+        "Retorna quantidade de pessoas que são seguidores"
+        return Pessoa.objects.filter(amigos=self).count()
 
 class Postagem(models.Model):
     pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE, verbose_name="Pessoa" )
-<<<<<<< HEAD
-    conteudo = models.TextField('Conteudo', max_length=300)
-=======
     conteudo = models.TextField('Conteudo', max_length=200)
->>>>>>> 076ec4b251c448a12cd3d9503697beb30cdeff1f
     data = models.DateTimeField("Data de publicação", auto_now_add=True)
 
     def __str__(self):
@@ -60,6 +42,9 @@ class Comentario(models.Model):
     postagem = models.ForeignKey(Postagem, on_delete=models.CASCADE, verbose_name="Postagem")
     conteudo = models.TextField('Comentario', max_length=200)
     data = models.DateTimeField("Data de publicação", auto_now_add=True)
+
+    def Meta(self):
+        ordering = ['-data']
 
     def __str__(self):
         return self.conteudo

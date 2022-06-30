@@ -1,41 +1,12 @@
-<<<<<<< HEAD
 {% extends 'rede_social/base.html' %} {% block content %}
 <header class="container">
   <nav class="navbar navbar-expand-lg navbar-light rounded">
-    <a class="navbar-brand" href="#">{{ perfil}}</a>
+    <a class="navbar-brand" href="{% url 'index' %}">{{ perfil }}</a>
     {% if user.is_authenticated %}
-    {% if perfil == user.pessoa %}
-    <a class="navbar-brand" href="{% url 'index' %}">Início</a>
-    {% elif segue %}     
-    <a class="btn btn-primary" href="{% url 'desseguir' perfil.slug %}">Seguindo</a>
-=======
-{% extends 'rede_social/base.html' %}
-{% block content %}
-    {% if perfil.postagem_set.all %}
-    {% for postagem in perfil.postagem_set.all %}
-    <div class="my-3 p-3 bg-body rounded shadow-lg">
-        <h6 class="border-bottom pb-4 mb-0">{{ postagem.conteudo }}</h6>
-        <div class="d-flex text-muted pt-3">
-            <p class="pb-3 mb-0 small lh-sm border-bottom">
-                <strong class="d-block text-gray-dark">{{perfil.nome}}</strong>
-                {{postagem.data}}
-            </p>
-        </div>
-        {% for comentario in postagem.comentario_set.all %}
-        <div class="my-3 p-3 bg-body rounded shadow-sm border">
-            <h6 class="border-bottom pb-2 mb-0">{{comentario.conteudo}}</h6>
-        <div class="d-flex text-muted pt-3">
-            <p class="pb-3 mb-0 small lh-sm border-bottom"> {{ comentario.pessoa.nome }}
-            {{comentario.data}}
-            </p>
-        </div>
-        </div>
-    </div> 
-        {% endfor %}
-    {% endfor %}
->>>>>>> 076ec4b251c448a12cd3d9503697beb30cdeff1f
+    {% if segue %}     
+    <a class="btn btn-primary" href="{% url 'unfollow' perfil.slug %}">Seguindo</a>
     {% else %}
-    <a class="btn btn-primary" href="{% url 'seguir' perfil.slug %}">Seguir</a>
+    <a class="btn btn-primary" href="{% url 'follow' perfil.slug %}">Seguir</a>
     {% endif %}
       {% endif %}
     <button
@@ -78,7 +49,7 @@
       <a target="_blank" href="https://www.totoprayogo.com/#"
         >@{{ p.pessoa }}</a
       >
-      <p class="float-right">{{ p.data|date:"d/m/Y"}} {{p.data|time:"H:i"}}</p>
+      <p class="float-right">{{ p.data|date:"d/m/Y" }}</p>
       <p>{{ p.conteudo }}</p>
     </li>
     {% endfor %}

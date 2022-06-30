@@ -5,7 +5,7 @@ from django.db.models import Prefetch
 from django.urls import reverse, reverse_lazy
 from django.views.generic import FormView, TemplateView, DetailView, CreateView
 from rede_social.forms import ContatoForm, PostagemForm, NovoComentario
-from .models import MensagemDeContato, Pessoa, Postagem, Comentario
+from .models import MensagemDeContato, Pessoa, Postagem
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 
@@ -28,6 +28,7 @@ class ContatoSucessoView(TemplateView):
     template_name = 'rede_social/contato_sucesso.html'
 
 #<!---------------AUTENTICAÇÃO NECESSÁRIA----------------------!>#
+@login_required(login_url='/conta/login')
 def index(request):
     postagem = Postagem.objects.order_by("-id")
     return render(request, 'rede_social/index.html',{'postagem': postagem})
@@ -46,25 +47,24 @@ def perfil_template(request,slug):
     if(perfil.pk != request.user.pessoa.pk and request.user.pessoa.amigos.filter(pk=perfil.id).exists()):
         segue = True
 
-<<<<<<< HEAD
     return render(request, 'rede_social/perfil.html', {'perfil': perfil, 'segue': segue})
 
 @login_required(login_url='/conta/login')
-def seguir(request, slug):
+def follow(request, slug):
     try:
         perfil = Pessoa.objects.get(slug=slug)
     except Pessoa.DoesNotExist:
-        raise Http404('Perfil não encontrado.')
+        raise Http404('Perfil não encontrado')
     
     if request.user.pessoa.amigos.filter(pk=perfil.id).exists():
-        raise HttpResponseForbidden('Você já está seguindo esta pessoa.')
+        raise HttpResponseForbidden('Você ja segue essa pessoa')
 
     request.user.pessoa.amigos.add(perfil)
 
     return redirect('perfil', slug=slug)
 
 @login_required(login_url='/conta/login')
-def desseguir(request, slug):
+def unfollow(request, slug):
     try:
         perfil = Pessoa.objects.get(slug=slug)
     except Pessoa.DoesNotExist:
@@ -79,9 +79,6 @@ def desseguir(request, slug):
 
 class PostagemView(LoginRequiredMixin, CreateView):
     login_url = '/conta/login/'
-=======
-class PostagemView(LoginRequiredMixin, CreateView):
->>>>>>> 076ec4b251c448a12cd3d9503697beb30cdeff1f
     template_name = 'rede_social/postagem.html'
     form_class = PostagemForm
     model = Postagem
