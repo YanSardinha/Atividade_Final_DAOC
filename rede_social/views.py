@@ -46,6 +46,7 @@ def perfil_template(request,slug):
     if(perfil.pk != request.user.pessoa.pk and request.user.pessoa.amigos.filter(pk=perfil.id).exists()):
         segue = True
 
+<<<<<<< HEAD
     return render(request, 'rede_social/perfil.html', {'perfil': perfil, 'segue': segue})
 
 @login_required(login_url='/conta/login')
@@ -78,6 +79,9 @@ def desseguir(request, slug):
 
 class PostagemView(LoginRequiredMixin, CreateView):
     login_url = '/conta/login/'
+=======
+class PostagemView(LoginRequiredMixin, CreateView):
+>>>>>>> 076ec4b251c448a12cd3d9503697beb30cdeff1f
     template_name = 'rede_social/postagem.html'
     form_class = PostagemForm
     model = Postagem

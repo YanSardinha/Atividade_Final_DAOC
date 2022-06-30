@@ -30,3 +30,4 @@ class MensagemDeContatoAdmin(admin.ModelAdmin):
     readonly_fields = ('data', )
     list_per_page = 10
     list_filter = ('id','email')
+

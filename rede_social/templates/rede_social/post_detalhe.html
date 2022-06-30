@@ -1,6 +1,7 @@
 {% extends 'rede_social/base.html' %} 
 {% load static %} {% load crispy_forms_tags %} 
 {% block content %}
+<<<<<<< HEAD
 <header class="container">
   <nav class="navbar navbar-expand-lg navbar-light rounded">
     <a class="navbar-brand" href="{% url 'index' %}">Início</a>
@@ -74,3 +75,15 @@
   </div>
 </main>
 {% endblock %}
+=======
+<ul class="timeline">
+{% for p in postagem %}
+  <li>
+    <a target="_blank" href="https://www.totoprayogo.com/#">{{ p.pessoa }} - @{{p.pessoa.usuario}}</a>
+    <p class="float-right">{{ p.data|date:"d/m/Y" }}</p>
+    <p>{{ p.conteudo }}</p>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}
+>>>>>>> 076ec4b251c448a12cd3d9503697beb30cdeff1f
